@@ -24,19 +24,34 @@ class RegistrationController extends Controller
         $reg_goods->shop_id = 1;
         $reg_goods->save();
 
-        // レコードを挿入したときのIDを取得
-        $lastInsertedId = $reg_goods->id;
+        // // レコードを挿入したときのIDを取得
+        // $lastInsertedId = $reg_goods->id;
 
-        // ディレクトリを作成
-        if (!file_exists(public_path() . "/img/" . $lastInsertedId)) {
-            mkdir(public_path() . "/img/" . $lastInsertedId, 0777);
-        }
+        // // ディレクトリを作成
+        // if (!file_exists(public_path() . "/img/" . $lastInsertedId)) {
+        //     mkdir(public_path() . "/img/" . $lastInsertedId, 0777);
+        // }
 
         // 一時保存から本番の格納場所へ移動
-        rename(public_path() . "/img/tmp/" . $request->image, public_path() . "/img/" . $lastInsertedId . "/" . $request->image);
+        rename(public_path() . "/img/tmp/" . $request->image, public_path() . "/img/" . $request->image);
         
         // 一時保存の画像を削除
-        File::cleanDirectory(public_path() . "/img/tmp");
+        \File::cleanDirectory(public_path() . "/img/tmp");
+return redirect('/shop_toppage');
+    }
+
+    public function updateGoods(int $id, Request $request) {//事業者_商品編集DBへ登録
+
+        $goods = new Goods;
+        $record = $goods->find($id);
+
+        $columns = ['name','content','amount'];
+
+        foreach($columns as $column){
+            $record->$column = $request->$column;
+        }
+
+        $record->save();
 
         return redirect('/shop_toppage');
     }

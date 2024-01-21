@@ -24,6 +24,8 @@
                                     </tbody>
                                 </table>
                             </div>
+</div>
+
         </main>
     </div>
 @endsection

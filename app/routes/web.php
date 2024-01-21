@@ -13,6 +13,8 @@ use App\Http\Controllers\RegistrationController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
+Route::group(['middleware' => 'auth'],function(){
 
 Route::get('/', [DisplayController::class,'index']);//トップページ
 Route::get('/goods/{id}/detail',[DisplayController::class,'goodsDetail'])->name('goods.detail');//トップページから商品詳細画面へ
@@ -21,6 +23,11 @@ Route::get('/shop_toppage', [DisplayController::class, 'shopTop'])->name('shop.t
 Route::get('/user_list', [DisplayController::class, 'userList'])->name('user.list');//事業者トップページからユーザーリストへ遷移
 Route::get('/sales_mgmt', [DisplayController::class, 'salesMgmt'])->name('sales.mgmt');//事業者トップページから売上管理画面へ遷移
 
+Route::get('/goods/{id}/edit',[DisplayController::class,'editGoods'])->name('goods.edit');//事業者トップページから商品編集（商品詳細）画面へ遷移
+Route::post('/edit_goods/{id}',[RegistrationController::class, 'updateGoods'])->name('goods.update');//事業者_商品編集DBへ登録
+
 Route::get('/reg_form', [DisplayController::class, 'registrationForm'])->name('registration.form');//事業者トップページから商品登録画面へ遷移
 Route::post('/confirm_reg', [DisplayController::class, 'sendRegData'])->name('confirmReg.goods');//商品登録画面から登録確認画面へ遷移
 Route::post('/registration_goods', [RegistrationController::class, 'registrationGoods'])->name('registration.goods');//商品登録
+
+});

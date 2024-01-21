@@ -28,9 +28,13 @@
                                         @foreach($goodsall as $goods)
                                         <tr>
                                             <th scope='col'>
-                                                <a href="{{ route('goods.detail',['id' => $goods['id']]) }}">商品画像</a>
+                                                <a href="{{ route('goods.detail',['id' => $goods['id']]) }}">
+                                                    <img src="{{ asset('img/' . $goods['image']) }}" alt="商品画像">
+                                                </a>
                                             </th>
-                                            <th scope='col'>{{ $goods['name'] }}</th>
+                                            <th scope='col'>
+                                                <a href="{{ route('goods.detail',['id' => $goods['id']]) }}">{{ $goods['name'] }}</a>
+                                            </th>
                                             <th scope='col'>{{ $goods['amount'] }}</th>
                                         </tr>
                                         @endforeach

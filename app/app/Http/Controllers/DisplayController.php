@@ -65,31 +65,43 @@ class DisplayController extends Controller
             'amount'=>$request->input('amount'),
         ];
 
-        //
-        $request->session()->put('goods', $goods)->file('image')->move(public_path() . "/img/tmp", $newImageName);
-        $name = $request->name;
+        // //
+        // $request->session()->put('goods', $goods)->file('image')->move(public_path() . "/img/tmp", $newImageName);
+        // $name = $request->name;
         // 拡張子つきでファイル名を取得
-        $imageName = $request->file('image')->getClientOriginalName();
+        $imageName = $request->file('image')->getClientOriginalName();//<input type='file' name='image'/>
         // 拡張子のみ
         $extension = $request->file('image')->getClientOriginalExtension();
-        // 新しいファイル名を生成（形式：元のファイル名_ランダムの英数字.拡張子）
+        // 新しいファイル名を生成（形式：元のファイル名_ランダムの英数字.拡張子）→同じ名前の違う画像があるかも
         $newImageName = pathinfo($imageName, PATHINFO_FILENAME) . "_" . uniqid() . "." . $extension;
         $request->file('image')->move(public_path() . "/img/tmp", $newImageName);
-        $image = "/img/tmp/" . $newImageName;
-        //
+        $image = "/img/tmp/" . $newImageName;//public/imgの中に/tmp作らなきゃダメだった
 
         return view('confirm_reg', [
-            'goods' => $goods
+            'goods' => $goods,
+            'image' => $image,//見える
+            'newImageName' => $newImageName,//hiddenにして見えないようにする
         ]);
     }
       
     public function salesMgmt(Request $request){//事業者トップページから売上管理画面へ遷移
     
-        $buys = new Buy;
-        $all = $user->all()->toArray();
+        $buy = new Buy;
+        $all = $buy->all()->toArray();//後でflg=1
         return view('sales_mgmt',[
             'buys'=> $all,
         ]);
     }
+
+public function editGoods(int $goodsId){//事業者トップページから商品編集（商品詳細）画面へ遷移
+    
+        $goods = new Goods;
+        $a_goods = $goods->where('id','=',$goodsId)->first();//getだと連想配列で受け渡される、カート内とかの複数あり得るのはgetで
+
+        return view('edit_goods',[
+            'goods'=> $a_goods,
+        ]);
+    }
+
 
 }

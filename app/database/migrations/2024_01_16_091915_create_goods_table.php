@@ -18,7 +18,7 @@ class CreateGoodsTable extends Migration
             $table->string('name','30');
             $table->integer('amount');
             $table->string('content')->nullable();
-//画像？
+$table->string('image')->nullable();
             $table->timestamps();
         });
     }

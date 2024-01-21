@@ -20,7 +20,7 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <th scope='col'><img src='{{ $goods["read_temp_path"] }}'></th>
+                                            <th scope='col'><img src='{{ $image }}'></th>
                                             <th scope='col'>{{ $goods['name'] }}</th>
                                             <th scope='col'>{{ $goods['content'] }}</th>
                                             <th scope='col'>{{ $goods['amount'] }}</th>
@@ -33,6 +33,7 @@
                     <div class="d-flex justify-content-around">
                         <form action="{{ route('registration.goods') }}" method='post'>
                             @csrf
+<input type='hidden' name='image' value='{{ $newImageName }}'/>
                             <input type='hidden' name='name' value='{{ $goods["name"] }}'/>
                             <input type='hidden' name='content' value='{{ $goods["content"] }}'/>
                             <input type='hidden' name='amount' value='{{ $goods["amount"] }}'/>

@@ -29,8 +29,14 @@
                                         <!-- ここに収入を表示する -->
                                         @foreach($goodsall as $goods)
                                         <tr>
-                                            <th scope='col'>商品画像</th>
-                                            <th scope='col'>{{ $goods['name'] }}</th>
+                                            <th scope='col'>
+                                                <a href="{{ route('goods.edit',['id' => $goods['id']]) }}">
+                                                    <img src="{{ asset('img/' . $goods['image']) }}" alt="商品画像">
+                                                </a>
+                                            </th>
+                                            <th scope='col'>
+                                                <a href="{{ route('goods.edit',['id' => $goods['id']]) }}">{{ $goods['name'] }}</a>
+                                            </th>
                                         </tr>
                                         @endforeach
                                     </tbody>
