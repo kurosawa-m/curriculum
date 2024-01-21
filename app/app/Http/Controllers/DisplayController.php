@@ -103,5 +103,9 @@ public function editGoods(int $goodsId){//事業者トップページから商�
         ]);
     }
 
+    public function toCart()
+    {
+        return view('cart');
+    }
 
 }

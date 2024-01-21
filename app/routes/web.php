@@ -30,4 +30,6 @@ Route::get('/reg_form', [DisplayController::class, 'registrationForm'])->name('r
 Route::post('/confirm_reg', [DisplayController::class, 'sendRegData'])->name('confirmReg.goods');//商品登録画面から登録確認画面へ遷移
 Route::post('/registration_goods', [RegistrationController::class, 'registrationGoods'])->name('registration.goods');//商品登録
 
+Route::get('/cart',[DisplayController::class, 'toCart'])->name('transition.cart');//->middleware('auth');  //カート内商品一覧へ遷移
+
 });

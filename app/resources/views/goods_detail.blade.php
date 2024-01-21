@@ -2,7 +2,7 @@
 @section('content')
         <main class="py-4">
             <div class="row justify-content-around">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="card">
                         <div class="card-header">
                             <div class='text-center'>商品詳細</div>
@@ -21,13 +21,14 @@
                                     <tbody>
                                         <!-- ここに支出を表示する -->
                                         <tr>
-                                            <!-- 画像いれる -->
+                                            <th scope='col'><img src="{{ asset('img/' . $goodsId['image']) }}" ></th>
                                             <th scope='col'>{{ $goodsId['name'] }}</th>
                                             <th scope='col'>{{ $goodsId['amount'] }}</th>
                                             <th scope='col'>{{ $goodsId['content'] }}</th>
                                         </tr>
                                     </tbody>
                                 </table>
+                                <button type='button' class='btn btn-primary'>カートに追加</button>
                             </div>
                         </div>
                     </div>

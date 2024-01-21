@@ -3,7 +3,7 @@
         <main class="py-4">
 
             <div class="row justify-content-around">
-                <div class="col-md-4">
+                <div class="col-md-6">
 
                             <th scope='col'>
                                 <a href="{{ route('shop.toppage') }}">事業者トップページへ</a>
