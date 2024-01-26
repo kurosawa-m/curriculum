@@ -36,6 +36,9 @@
                 document.getElementById('logout-form').submit();
                 });
             </script>
+            <a href="{{ route('to.mypage') }}"  class="my-navbar-item justify-content-end">マイページ</a>
+            <a href="{{ route('header.tomypage') }}" class="my-navbar-item justify-content-end">カート</a>
+
         @else
             <a class="my-navbar-item" href="{{ route('login') }}">ログイン</a>
             /
@@ -47,7 +50,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    商品一覧
+                    トップページ
                 </a>
             </div>
         </nav>

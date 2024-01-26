@@ -8,7 +8,7 @@ use App\Goods;
 use App\Buy;
 use App\User;
 
-// use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth;
 
 class DisplayController extends Controller
 {
@@ -65,9 +65,6 @@ class DisplayController extends Controller
             'amount'=>$request->input('amount'),
         ];
 
-        // //
-        // $request->session()->put('goods', $goods)->file('image')->move(public_path() . "/img/tmp", $newImageName);
-        // $name = $request->name;
         // 拡張子つきでファイル名を取得
         $imageName = $request->file('image')->getClientOriginalName();//<input type='file' name='image'/>
         // 拡張子のみ
@@ -102,10 +99,55 @@ public function editGoods(int $goodsId){//事業者トップページから商�
             'goods'=> $a_goods,
         ]);
     }
+    
+    public function toMypage(Request $request){//マイページへ遷移
+    
+        // $user = new User;
+        // $all = $user->all()->toArray();
+        $all = Auth::user()->first();
+        $buys = new Buy;
+        $goods = new Goods;
 
-    public function toCart()
-    {
-        return view('cart');
+        $cart = Auth::user()->buy()->where('buy_flg','=',1)->with('Goods')->get();//リレーションしたgoodsテーブルの情報も一緒にselect
+
+        return view('mypage',[
+            'user'=> $all,
+            'carts'=> $cart,
+        ]);
     }
+
+    public function headerTocart(Request $request){//カート内商品一覧へ遷移
+
+        $buys = new Buy;
+        $goods = new Goods;
+
+        $cart = Auth::user()->buy()->where('buy_flg','=',0)->with('Goods')->get();//リレーションしたgoodsテーブルの情報も一緒にselect
+
+        return view('cart',[
+            'carts'=> $cart,
+        ]);
+    }
+
+
+    public function toUserinfo(Request $request){//マイページからユーザー情報変更画面へ遷移
+    
+        $all = Auth::user();
+
+        return view('user_info',[
+            'user'=> $all,
+        ]);
+    }
+
+    
+    public function confirmAddress(Request $request){//カート内商品一覧から送り先確認画面へ遷移
+    
+        $all = Auth::user();
+
+        return view('confirm_address',[
+            'user'=> $all,
+        ]);
+    }
+
+
 
 }

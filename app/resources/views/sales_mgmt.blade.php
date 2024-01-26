@@ -1,5 +1,8 @@
 @extends('layouts.layout')
 @section('content')
+@can ('admin_only')
+<span>
+
         <main class="py-4">
 
                             <div class='text-center'>売上管理</div>
@@ -24,9 +27,12 @@
                                     </tbody>
                                 </table>
                             </div>
-</div>
+                            </div>
 
         </main>
+</span>
+@endcan
+
     </div>
 @endsection
 

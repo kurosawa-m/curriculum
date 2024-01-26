@@ -19,7 +19,6 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- ここに支出を表示する -->
                                         <tr>
                                             <th scope='col'><img src="{{ asset('img/' . $goodsId['image']) }}" ></th>
                                             <th scope='col'>{{ $goodsId['name'] }}</th>
@@ -28,7 +27,14 @@
                                         </tr>
                                     </tbody>
                                 </table>
-                                <button type='button' class='btn btn-primary'>カートに追加</button>
+
+                                <form action="{{ route('transition.cart') }}" method="post" class="form" >
+                                    @csrf
+                                    <input type="hidden" name="goods_id" value="{{ $goodsId->id }}">
+                                    <input type="text" name="quantity" value="1">
+                                    <input type="submit" value="カートに入れる">
+                                </form>
+
                             </div>
                         </div>
                     </div>

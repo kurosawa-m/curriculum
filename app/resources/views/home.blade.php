@@ -24,7 +24,6 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- ここに収入を表示する -->
                                         @foreach($goodsall as $goods)
                                         <tr>
                                             <th scope='col'>

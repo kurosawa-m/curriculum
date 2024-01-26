@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -38,11 +39,23 @@ class User extends Authenticatable
     ];
 
     //buy、reviewモデルとの関連性
-    public function buy(){
+    public function Buy(){
         return $this->hasMany('App\Buy');
     }
-    public function review(){
+    public function Review(){
         return $this->hasMany('App\Review');
     }
-    
+    public function Goods(){
+        return $this->hasMany('App\Goods');
+    }
+
+    //role
+    public function isGeneralUser()
+    {
+        return $this->role = 0;
+    }
+    public function isBusinessUser()
+    {
+        return $this->role = 1;
+    }
 }
