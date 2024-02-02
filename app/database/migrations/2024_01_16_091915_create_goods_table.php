@@ -19,6 +19,7 @@ class CreateGoodsTable extends Migration
             $table->integer('amount');
             $table->string('content')->nullable();
             $table->string('image')->nullable();
+            $table->integer('user_id');
             $table->timestamps();
         });
     }

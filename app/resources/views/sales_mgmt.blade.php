@@ -6,6 +6,9 @@
         <main class="py-4">
 
                             <div class='text-center'>売上管理</div>
+                            <div class='text-center'>売上合計
+                                <div>{{ $total_sales }}</div>
+                            </div>
                             <div class="card-body">
                                 <table class='table'>
                                     <thead>

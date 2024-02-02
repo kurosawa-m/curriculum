@@ -23,7 +23,7 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <th scope='col'><img src='{{ $image }}'></th>
+                                                <th scope='col'><img src='{{ $image }}'  width="200" height="200"></th>
                                                 <th scope='col'>{{ $goods['name'] }}</th>
                                                 <th scope='col'>{{ $goods['content'] }}</th>
                                                 <th scope='col'>{{ $goods['amount'] }}</th>

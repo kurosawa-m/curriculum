@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Goods;
 use App\Buy;
 use App\User;
-
+use App\Review;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -21,7 +21,7 @@ class RegistrationController extends Controller
         $reg_goods->image = $request->image;
         $reg_goods->content = $request->content;
         $reg_goods->amount = $request->amount;
-        $reg_goods->shop_id = 1;
+        $reg_goods->user_id = Auth::user()->id;
         $reg_goods->save();
 
         // 一時保存から本番の格納場所へ移動
@@ -102,7 +102,7 @@ class RegistrationController extends Controller
         foreach($columns as $column){
         $record->$column = $request->$column;
         }
-        // dd($record);
+
         $record->save();
 
         //お届け先確認から注文内容確認へ遷移
@@ -135,5 +135,60 @@ class RegistrationController extends Controller
 
     }
 
+        public function completedRegReview(Request $request) {//レビュー内容登録、商品詳細ページへ遷移
 
+        $reviews = new Review;
+        $reviews->title = $request->title;
+        $reviews->comment = $request->comment;
+        $reviews->goods_id = $request->id;
+
+        $reviews->save();
+
+        return redirect('/mypage');
+    }
+
+    
+    public function confirmAddress(Request $request) {//カート内で数量変更→住所登録画面へ
+
+        $buys = new Buy;
+        $buy_id = Buy::where('user_id',$request->input('data')[0]['id'])->get();
+
+        foreach($buy_id as $buy){
+            foreach($request->input('data') as $val){
+                if($buy['goods_id']==$val['goods_id']){
+                $buy->quantity = $val['quantity'];
+                $buy->goods_id = $val['goods_id'];
+                $buy->user_id = $val['id'];
+            $buy->save();
+                }
+            }
+        }
+
+        $all = Auth::user();
+
+        return view('confirm_address',[
+            'user'=> $all,
+        ]);
+    }
+
+
+    public function deleteUser(int $id){//ユーザー削除（退会）
+
+        Auth::User($id)->delete();
+        return redirect('/');
+        
+    }
+
+
+    public function deleteCart(int $id){//カート内商品削除
+
+        $instance = new Buy;
+
+        $buys = $instance->find($id);
+
+        $buys->delete();
+
+        return redirect('/cart');
+    }
+    
 }

@@ -1,11 +1,11 @@
 @extends('layouts.layout')
 @section('content')
         <main class="py-4">
-        @can ('admin_only')
+        @can('admin_only')
             <span>
 
                 <div class="row justify-content-around">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <div class="card">
                             <div class="card-header">
                                 <div class='text-center'>ショップ名</div>
@@ -21,7 +21,6 @@
                                                 <th scope='col'>
                                                     <a href="{{ route('registration.form') }}">商品登録</a>
                                                 </th>
-                                                <th scope='col'>売上合計</th>
                                                 <th scope='col'>
                                                     <a href="{{ route('sales.mgmt') }}">売上管理</a>
                                                 </th>
@@ -32,7 +31,7 @@
                                             <tr>
                                                 <th scope='col'>
                                                     <a href="{{ route('goods.edit',['id' => $goods['id']]) }}">
-                                                        <img src="{{ asset('img/' . $goods['image']) }}" alt="商品画像">
+                                                        <img src="{{ asset('img/' . $goods['image']) }}" alt="商品画像" width="200" height="200">
                                                     </a>
                                                 </th>
                                                 <th scope='col'>

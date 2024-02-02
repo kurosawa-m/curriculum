@@ -10,7 +10,7 @@
     @csrf
 
     <label for='image'>商品画像</label>
-    <img src="{{ asset('img/' . $goods['image']) }}" >
+    <img src="{{ asset('img/' . $goods['image']) }}"  width="200" height="200">
 
         <label for='name'>商品名</label>
             <input type='text' class='form-control' name='name' value="{{ $goods['name'] }}"/>

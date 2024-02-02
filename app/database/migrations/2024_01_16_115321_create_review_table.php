@@ -17,7 +17,6 @@ class CreateReviewTable extends Migration
             $table->bigIncrements('id');
             $table->string('title','30');
             $table->string('comment');
-            $table->integer('user_id');
             $table->integer('goods_id');
             $table->timestamps();
         });

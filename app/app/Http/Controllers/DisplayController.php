@@ -7,12 +7,14 @@ use Illuminate\Http\Request;
 use App\Goods;
 use App\Buy;
 use App\User;
+use App\Review;
+use Gate;
 
 use Illuminate\Support\Facades\Auth;
 
 class DisplayController extends Controller
 {
-    public function index() {//一般ユーザー＿トップページ
+    public function index(){//一般ユーザー＿トップページ
 
         $goods = new Goods;
         $all = $goods->all()->toArray();
@@ -20,28 +22,53 @@ class DisplayController extends Controller
         return view('home',[
             'goodsall'=> $all,
         ]);
-
     }
 
+
+    public function keywordSearch(Request $request){//トップページでキーワード検索
+
+        $keyword = $request->input('keyword');
+        $goods = new Goods;
+        $all = $goods->all()->toArray();
+        // キーワード検索
+        if (isset($keyword)) {
+            $all = $goods->where('name', 'like', '%' . $keyword . '%')->orWhere('content', 'like', '%' . $keyword . '%')->get();
+        }
+
+        return view('home',[
+            'goodsall'=> $all,
+        ]);
+    }
+
+
     public function goodsDetail(int $goodsId){//一般ユーザー＿商品詳細画面へ遷移
+
         $goods = new Goods;
         $goodsall = $goods->where('id','=',$goodsId)->first();//getだと連想配列で受け渡される、カート内とかの複数あり得るのはgetで
+
+        $reviews = new Review;
+        $reviewall = $reviews->where('goods_id','=',$goodsId)->get();
+
         return view('goods_detail',[
             'goodsId'=> $goodsall,
+            'reviewId'=> $reviewall,
         ]);
     }
 
     public function shopTop(Request $request){//事業者トップページへ遷移
     
+        Gate::authorize('admin_only');//事業者のみ閲覧可能
+
         $goods = new Goods;
-        $all = $goods->all()->toArray();
+        $all = Auth::user()->goods()->get();
+
         return view('shop_toppage',[
             'goodsall'=> $all,
         ]);
     }
 
     public function userList(Request $request){//事業者トップページからユーザーリストへ遷移
-    
+
         $user = new User;
         $all = $user->all()->toArray();
         return view('user_list',[
@@ -51,15 +78,12 @@ class DisplayController extends Controller
 
     public function registrationForm(Request $request){//事業者トップページから商品登録画面へ遷移
 
-        //事業者のID紐づける
-
         return view('reg_form');
     }
 
     public function sendRegData(Request $request){//商品登録画面から値保持して確認画面へ
 
         $goods = [
-            // 'image'=>$request->file('image')->getClientOriginalName(),
             'name'=>$request->input('name'),
             'content'=>$request->input('content'),
             'amount'=>$request->input('amount'),
@@ -74,7 +98,7 @@ class DisplayController extends Controller
         $request->file('image')->move(public_path() . "/img/tmp", $newImageName);
         $image = "/img/tmp/" . $newImageName;//public/imgの中に/tmp作らなきゃダメだった
 
-        return view('confirm_reg', [
+        return view('confirm_reg',[
             'goods' => $goods,
             'image' => $image,//見える
             'newImageName' => $newImageName,//hiddenにして見えないようにする
@@ -84,13 +108,21 @@ class DisplayController extends Controller
     public function salesMgmt(Request $request){//事業者トップページから売上管理画面へ遷移
     
         $buy = new Buy;
-        $all = $buy->all()->toArray();//後でflg=1
-        return view('sales_mgmt',[
+        $all = Auth::user()->buy()->where('buy_flg','=',1)->get();//後でflg=1
+        //売上合計
+        $sales = new Buy;
+        $total_sales = Auth::user()->Buy()->withCount(['goods AS total_amount' => function($sales){
+            $sales->where(Goods::raw("SUM(amount) as amount_sum"));
+        }
+        ])->get();
+
+
+        return view('sales_mgmt',compact('total_sales'),[
             'buys'=> $all,
         ]);
     }
 
-public function editGoods(int $goodsId){//事業者トップページから商品編集（商品詳細）画面へ遷移
+    public function editGoods(int $goodsId){//事業者トップページから商品編集（商品詳細）画面へ遷移
     
         $goods = new Goods;
         $a_goods = $goods->where('id','=',$goodsId)->first();//getだと連想配列で受け渡される、カート内とかの複数あり得るのはgetで
@@ -102,8 +134,6 @@ public function editGoods(int $goodsId){//事業者トップページから商�
     
     public function toMypage(Request $request){//マイページへ遷移
     
-        // $user = new User;
-        // $all = $user->all()->toArray();
         $all = Auth::user()->first();
         $buys = new Buy;
         $goods = new Goods;
@@ -138,16 +168,35 @@ public function editGoods(int $goodsId){//事業者トップページから商�
         ]);
     }
 
-    
-    public function confirmAddress(Request $request){//カート内商品一覧から送り先確認画面へ遷移
-    
-        $all = Auth::user();
 
-        return view('confirm_address',[
-            'user'=> $all,
+    public function registrationReview(int $id, Request $request){//マイページからレビュー入力画面へ
+
+        $instance = new Goods;
+        $goods_id = $instance->where('id','=',$id)->first();
+        return view('review_reg',[
+            'goods'=> $goods_id,
         ]);
+
     }
 
 
+    public function confirmReview(int $id, Request $request){//レビュー内容確認画面へ
 
+        $instance = new Goods;
+        $goods_id = $instance->where('id','=',$id)->first();
+
+        $reviews = new Review;
+        $review_id = $reviews->all()->toArray();;
+
+        $reviews = [
+            'title'=>$request->input('title'),
+            'comment'=>$request->input('comment'),
+            'goods_id'=>$request->input('id'),
+        ];
+
+        return view('confirm_review', [
+            'review' => $reviews,
+            'goods'=> $goods_id,
+        ]);
+    }
 }

@@ -20,7 +20,7 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <th scope='col'><img src="{{ asset('img/' . $goodsId['image']) }}" ></th>
+                                            <th scope='col'><img src="{{ asset('img/' . $goodsId['image']) }}"  width="200" height="200"></th>
                                             <th scope='col'>{{ $goodsId['name'] }}</th>
                                             <th scope='col'>{{ $goodsId['amount'] }}</th>
                                             <th scope='col'>{{ $goodsId['content'] }}</th>
@@ -35,6 +35,23 @@
                                     <input type="submit" value="カートに入れる">
                                 </form>
 
+                                <table class='table'>
+                                    <thead>
+                                        <tr>
+                                            <th scope='col'>レビュー</th>
+                                            <th scope='col'></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($reviewId as $review)
+                                        <tr>
+                                            <th scope='col'>{{ $review['title'] }}</th>
+                                            <th scope='col'>{{ $review['comment'] }}</th>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                 
                             </div>
                         </div>
                     </div>

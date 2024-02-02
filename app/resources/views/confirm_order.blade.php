@@ -15,17 +15,16 @@
                         </thead>
                         <tbody>
                         @foreach($carts as $cart)
-                        <form action="{{ route('order.completed',['id' => $cart->id]) }}" method='post'>
-                        @csrf
                             <tr>
-                                <th><img src="{{ asset('img/' . $cart['goods'][0]['image']) }}" alt="商品画像"></th>
-                                <th>{{ $cart['goods'][0]['name'] }}</th>
-                                <th>{{ $cart['goods'][0]['amount'] }} 円</th>
+                                <th><img src="{{ asset('img/' . $cart->Goods[0]->image) }}" alt="商品画像"  width="200" height="200"></th>
+                                <th>{{ $cart->Goods[0]->name }}</th>
+                                <th>{{ $cart->Goods[0]->amount }} 円</th>
                                 <th>{{ $cart['quantity'] }} 個</th>
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
+                  
                     <table class='table'>
                         <thead>
                             <tr>
@@ -47,6 +46,12 @@
                         </tbody>
                     </table>
 
+                    <a href="{{ route('transition.cart') }}">
+                        <button type='button' class='btn btn-primary'>注文内容変更</button>
+                    </a>
+
+                <form action="{{ route('order.completed',['id' => $cart->id]) }}" method='post'>
+                @csrf
                     <input type='hidden' class='form-control' name='id' value="{{ $cart->id }}"/>
                     <input type='hidden' name='buy_flg' value="{{ $cart['buy_flg'] }}"/>
                     <input type="submit" value="購入確定する">
