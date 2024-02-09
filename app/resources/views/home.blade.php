@@ -59,6 +59,10 @@
                                             </th>
                                             <th scope='col'>{{ $goods['amount'] }}</th>
                                         </tr>
+<input type="hidden" id="count" value=0>
+<div id="content">
+</div>
+
                                         @endforeach
                                     </tbody>
                                 </table>

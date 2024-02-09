@@ -18,10 +18,10 @@ class DisplayController extends Controller
 
         $goods = new Goods;
         $all = $goods->all()->toArray();
-        
+
         return view('home',[
             'goodsall'=> $all,
-        ]);
+            ]);
     }
 
 
@@ -108,17 +108,14 @@ class DisplayController extends Controller
     public function salesMgmt(Request $request){//事業者トップページから売上管理画面へ遷移
     
         $buy = new Buy;
-        $all = Auth::user()->buy()->where('buy_flg','=',1)->get();//後でflg=1
-        //売上合計
-        $sales = new Buy;
-        $total_sales = Auth::user()->Buy()->withCount(['goods AS total_amount' => function($sales){
-            $sales->where(Goods::raw("SUM(amount) as amount_sum"));
-        }
-        ])->get();
+        $goods = new Goods;
+    
+        $all = $buy->where('buy_flg', '=', 1)->whereHas('goods', function ($query) {//購入された商品の中でログイン中のユーザーが出品した商品
+            $query->where('user_id', Auth::id());
+            })->with('goods')->get();
 
-
-        return view('sales_mgmt',compact('total_sales'),[
-            'buys'=> $all,
+        return view('sales_mgmt', [
+            'buys' => $all,
         ]);
     }
 
@@ -199,4 +196,16 @@ class DisplayController extends Controller
             'goods'=> $goods_id,
         ]);
     }
+
+    public function loadMoreData(Request $request){//無限スクロール
+
+        $offset = $request->input('offset', 0);
+        $limit = 5; // 1回のリクエストで取得するアイテム数
+
+        $data = Goods::skip($offset)->take($limit)->get();
+
+        return response()->json(['data' => $data]);
+    }
+
+
 }

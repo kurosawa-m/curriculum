@@ -9,7 +9,7 @@ class Goods extends Model
     protected $fillable = ['name','content','amount'];
 
     // public function Buy(){
-    //     return $this->hasMany('App\Buy');
+    //     return $this->belongTo('App\Buy','goods_id','id');
     // }
 
 }
