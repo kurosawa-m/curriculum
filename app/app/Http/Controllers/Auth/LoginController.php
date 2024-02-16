@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
+use App\User;
+use Illuminate\Support\Facades\Auth;
+
 class LoginController extends Controller
 {
     /*
@@ -33,8 +36,22 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
+    public function __construct(){
+
         $this->middleware('guest')->except('logout');
+    
+    }
+
+
+    public function redirectPath(){
+
+        $user = Auth::user()->first();
+
+        if($user['id']===0){
+            return view('/home');
+        }else{
+            return view('/shop_toppage');
+        }
+
     }
 }

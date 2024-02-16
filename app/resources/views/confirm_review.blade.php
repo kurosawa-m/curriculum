@@ -9,12 +9,10 @@
                 <div class="card-body">
                     <div class="card-body">
                         
-                        <form action="{{ route('completed.reg.review') }}" method="post">
+                        <form action="{{ route('completed.reg.review',['id' => $goods['id']]) }}" method="post">
                             <table class='table'>
                                 <thead>
                                     <tr>
-                                        <th scope='col'></th>
-                                        <th scope='col'></th>
                                         <th scope='col'></th>
                                         <th scope='col'>タイトル</th>
                                         <th scope='col'>内容</th>
@@ -23,8 +21,6 @@
                                 <tbody>
                                     <tr>
                                         <th><img src="{{ asset('img/' . $goods['image']) }}"  width="200" height="200"></th>
-                                        <th>{{ $goods['name'] }}</th>
-                                        <th>{{ $goods['amount'] }}</th>
                                         <th>{{ $review['title'] }}</th>
                                         <th>{{ $review['comment'] }}</th>
                                     </tr>

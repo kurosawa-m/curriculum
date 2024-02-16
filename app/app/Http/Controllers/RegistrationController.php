@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\CreateData;
 
 use App\Goods;
 use App\Buy;
@@ -76,13 +77,13 @@ class RegistrationController extends Controller
 
         if(!isset($user['fullname'])){
 
-            $columns = ['name','email','password'];
+            $columns = ['name','email'];
             foreach($columns as $column){
             $record->$column = $request->$column;
 
         }}else{
 
-            $columns = ['name','email','password','fullname','tel','postcode','address'];
+            $columns = ['name','email','fullname','tel','postcode','address'];
             foreach($columns as $column){
             $record->$column = $request->$column;
 
@@ -93,7 +94,7 @@ class RegistrationController extends Controller
         return redirect('/mypage');
     }
     
-    public function registrationUserinfo(int $id, Request $request){//送り先情報保存→お届け先確認から注文内容確認へ遷移
+    public function registrationUserinfo(int $id, CreateData $request){//送り先情報保存→お届け先確認から注文内容確認へ遷移
         //送り先情報保存
         $users = new User;
         $record = $users->find($id);
@@ -131,7 +132,13 @@ class RegistrationController extends Controller
             $records->save();
         }
 
-        return redirect('/');
+        $all = Auth::user()->first();
+        $cart = Auth::user()->buy()->where('buy_flg','=',1)->with('Goods')->get();//リレーションしたgoodsテーブルの情報も一緒にselect
+
+        return view('/mypage',[
+            'user'=> $all,
+            'carts'=> $cart,
+        ]);
 
     }
 
@@ -144,11 +151,42 @@ class RegistrationController extends Controller
 
         $reviews->save();
 
-        return redirect('/mypage');
+        $goods = new Goods;
+        $goodsall = $goods->where('id','=',$reviews->goods_id)->first();
+        $reviewall = $reviews->where('goods_id','=',$reviews->goods_id)->get();
+
+        return view('/goods_detail',[
+            'goodsId'=> $goodsall,
+            'reviewId'=> $reviewall,
+        ]);
     }
 
     
-    public function confirmAddress(Request $request) {//カート内で数量変更→住所登録画面へ
+    public function confirmAddress() {//住所登録画面へ
+
+        // $buys = new Buy;
+        // $buy_id = Buy::where('user_id',$request->input('data')[0]['id'])->get();
+
+        // foreach($buy_id as $buy){
+        //     foreach($request->input('data') as $val){
+        //         if($buy['goods_id']==$val['goods_id']){
+        //         $buy->quantity = $val['quantity'];
+        //         $buy->goods_id = $val['goods_id'];
+        //         $buy->user_id = $val['id'];
+        //     $buy->save();
+        //         }
+        //     }
+        // }
+
+        $all = Auth::user();
+
+        return view('confirm_address',[
+            'user'=> $all,
+        ]);
+    }
+
+    
+    public function changeQuantity(Request $request) {//カート内で数量変更
 
         $buys = new Buy;
         $buy_id = Buy::where('user_id',$request->input('data')[0]['id'])->get();
@@ -164,12 +202,9 @@ class RegistrationController extends Controller
             }
         }
 
-        $all = Auth::user();
-
-        return view('confirm_address',[
-            'user'=> $all,
-        ]);
+        return redirect('/cart');
     }
+
 
 
     public function deleteUser(int $id){//ユーザー削除（退会）
@@ -183,12 +218,33 @@ class RegistrationController extends Controller
     public function deleteCart(int $id){//カート内商品削除
 
         $instance = new Buy;
-
         $buys = $instance->find($id);
-
         $buys->delete();
 
         return redirect('/cart');
     }
     
+
+    public function hideGoods(int $id){//事業者＿商品非表示
+
+        $instance = new Goods;
+        $goods = $instance->find($id);
+        $goods->del_flg = 1;
+        $goods->save();
+
+        return redirect('/shop_toppage');
+    }
+
+    
+    public function displayGoods(int $id){//事業者＿商品表示
+
+        $instance = new Goods;
+        $goods = $instance->find($id);
+        $goods->del_flg = 0;
+        $goods->save();
+
+        return redirect('/shop_toppage');
+    }
+
+
 }

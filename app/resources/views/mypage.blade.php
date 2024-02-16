@@ -33,35 +33,47 @@
 
 
             <div class="card-body">
-                <table class='table'>
-                    <thead>
-                        <tr>
-                            <th>注文履歴</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr scope='col'>
-                        @foreach($carts as $cart)
-                        <form action="{{ route('reg.review',['id' => $cart->goods_id]) }}" method='post'>
-                        @csrf
-                            <th scope='col'><img src="{{ asset('img/' . $cart['goods'][0]['image']) }}" alt="商品画像"  width="200" height="200"></th>
-                            <th scope='col'>{{ $cart['goods'][0]['name'] }}</th>
-                            <th scope='col'>{{ $cart['goods'][0]['amount'] }} 円</th>
-                            <th scope='col'>{{ $cart['quantity'] }} 個</th>
-                            <input type='hidden' class='form-control' name='id' value="{{ $cart['goods'][0]['id'] }}"/>
-                            <button type='submit' class='btn btn-primary w-25 mt-3'>レビューを投稿する</button>
-                        @endforeach
-                        </form>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="card-header">
+                    <div class='text-center'>注文履歴</div>
+                </div>
+                <div class="card-body">
+                    <table class='table'>
+                        <thead>
+                            <tr>
+                                <th>商品画像</th>
+                                <th>商品名</th>
+                                <th>金額</th>
+                                <th>数量</th>
+                                <th>購入日時</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($carts as $cart)
+                            <tr>
+                                <td><img src="{{ asset('img/' . $cart['goods'][0]['image']) }}" alt="商品画像" width="200" height="200"></td>
+                                <td>{{ $cart['goods'][0]['name'] }}</td>
+                                <td>{{ $cart['goods'][0]['amount'] }} 円</td>
+                                <td>{{ $cart['quantity'] }} 個</td>
+                                <td>{{ $cart['created_at'] }}</td>
+                                <td>
+                                    <form action="{{ route('reg.review',['id' => $cart->goods_id]) }}" method="post">
+                                        @csrf
+                                        <input type="hidden" class="form-control" name="id" value="{{ $cart['goods'][0]['id'] }}"/>
+                                        <button type="submit" class="btn btn-primary mt-3">レビューを投稿する</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="d-flex justify-content-around">
                 <form action="{{ route('delete.user',['id' => $user['id']]) }}" method='post'>
                     @csrf
                     @method('DELETE')
                     <input type='hidden' name='delete' value='$user["id"]'/>
-                    <button class='btn btn-danger' onclick='clickEvent()'>退会する</button>
+                    <button class='btn btn-danger mt-10' onclick='clickEvent()'>退会する</button>
                 </form>
             </div>
 

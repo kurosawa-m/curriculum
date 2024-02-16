@@ -2,7 +2,7 @@
 @section('content')
         <main class="py-4">
             <div class="row justify-content-around">
-                <div class="col-md-4">
+                <div class="col-md-8">
                 @can ('admin_only')
                     <span>
 
@@ -40,7 +40,7 @@
                                 <input type='hidden' name='name' value='{{ $goods["name"] }}'/>
                                 <input type='hidden' name='content' value='{{ $goods["content"] }}'/>
                                 <input type='hidden' name='amount' value='{{ $goods["amount"] }}'/>
-                                <button class='btn btn-danger'>登録</button>
+                                <button class='btn btn-primary mt-3'>登録</button>
                             </form>
                         </div>
                         

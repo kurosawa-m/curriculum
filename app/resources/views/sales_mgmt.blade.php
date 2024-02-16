@@ -16,6 +16,9 @@
                                             <th>購入金額</th>
                                         </tr>
                                     </thead>
+                                        @php
+                                            $sum = 0;                                             
+                                        @endphp
                                     <tbody>
                                         @foreach($buys as $buy)
                                         <tr>
@@ -24,12 +27,16 @@
                                             <th>{{ $buy['quantity'] }}</th>
                                             @php
                                                 $result = $buy['quantity'] * $buy['goods'][0]['amount'];
+                                                $sum = $sum + $result;                                                
                                             @endphp
                                             <th>{{ $result }}</th>
                                         </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
+
+                                <div>{{ $sum }}</div>
+
                             </div>
                             </div>
 

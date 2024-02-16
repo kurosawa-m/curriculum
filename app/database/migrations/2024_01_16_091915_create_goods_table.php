@@ -20,6 +20,7 @@ class CreateGoodsTable extends Migration
             $table->string('content')->nullable();
             $table->string('image')->nullable();
             $table->integer('user_id');
+            $table->integer('del_flg')->default(0);
             $table->timestamps();
         });
     }

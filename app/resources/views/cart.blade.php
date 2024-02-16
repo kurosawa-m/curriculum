@@ -3,8 +3,8 @@
         <main class="py-4">
 
             <div class='text-center'>カート内商品</div>
-                <div class="card-body">
-                    <form action="{{ route('confirm.address') }}" method="post">
+                <div class="card-body d-flex justify-content-center">
+                    <form action="{{ route('change.quantity') }}" method="post">
                     @csrf
                         <table class='table'>
                             <thead>
@@ -25,14 +25,19 @@
                                     <th><input type='hidden' name='data[{{ $key }}][goods_id]' value="{{ $cart->Goods[0]->id }}"/></th>
                                     <th><input type='hidden' name='data[{{ $key }}][id]' value="{{ Auth::id() }}"/></th>
                                     <th>
+                                        <button type='submit' class='btn mx-auto'>個数変更</button>
+                                    </th>
+                                    <th>
                                         <a href="{{ route('delete.cart', ['id' => $cart['id']]) }}" class='btn btn-danger'>削除</a>
                                     </th>
                                 </tr>
                             @endforeach
                             </tbody>
                         </table>
-                        <button type='submit' class='btn btn-primary'>購入へすすむ</button>
                     </form>
+                </div>
+                <div class="d-flex justify-content-around">
+                    <a href="{{ route('confirm.address') }}" class='btn btn-primary'>購入へ進む</a>
                 </div>
             </div>
 

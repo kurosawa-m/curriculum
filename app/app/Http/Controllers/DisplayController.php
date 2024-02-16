@@ -17,26 +17,60 @@ class DisplayController extends Controller
     public function index(){//一般ユーザー＿トップページ
 
         $goods = new Goods;
-        $all = $goods->all()->toArray();
+        // $all = $goods->all()->toArray();
+        $all = $goods->where('del_flg','=',0)->take(3)->get();
+
+        $keyword ='';
+        $from ='';
+        $until ='';
 
         return view('home',[
             'goodsall'=> $all,
+            'keyword'=> $keyword,
+            'from'=> $from,
+            'until'=> $until,
             ]);
+    }
+
+
+    public function ajaxscroll(Request $request){
+
+        $goods = new Goods;
+
+        $count = $request->count;
+        $goodsall = $goods->where('del_flg','=',0)->skip($count)->take(3)->get();//
+
+        return response()->json($goodsall);//goodsallをjsonタイプでおくる
+
     }
 
 
     public function keywordSearch(Request $request){//トップページでキーワード検索
 
+        // キーワード検索
         $keyword = $request->input('keyword');
         $goods = new Goods;
-        $all = $goods->all()->toArray();
-        // キーワード検索
+        $all = $goods->where('del_flg','=',0)->get();
         if (isset($keyword)) {
             $all = $goods->where('name', 'like', '%' . $keyword . '%')->orWhere('content', 'like', '%' . $keyword . '%')->get();
         }
 
+        // 金額検索
+        $from = $request->input('from');
+        $until = $request->input('until');
+        if (isset($from) && isset($until)){
+            $all = $goods->whereBetween("amount", [$from, $until])->get();//text部分をamount?
+        }
+
+        // 検索かけなかったら
+        // $goods = new Goods;
+        // $all = $goods->all()->toArray();
+
         return view('home',[
             'goodsall'=> $all,
+            'from'=> $from,
+            'until'=> $until,
+            'keyword'=>$keyword,
         ]);
     }
 
@@ -71,6 +105,7 @@ class DisplayController extends Controller
 
         $user = new User;
         $all = $user->all()->toArray();
+        // dd($all);
         return view('user_list',[
             'users'=> $all,
         ]);

@@ -14,7 +14,7 @@
 
                             <label for='name' class='mt-2'>{{ $goods['name'] }}</label>
 
-                            <label for='amount' class='mt-2'>{{ $goods['amount'] }}</label>
+                            <label for='amount' class='mt-2'>{{ $goods['amount'] }}円</label>
 
                             <label for='title' class='mt-2'>レビュータイトル</label>
                                 <input type='text' class='form-control' name='title'/>

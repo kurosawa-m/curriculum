@@ -22,9 +22,13 @@
 </head>
 <body>
 
-<div class="my-navbar-control">
+<div class="my-navbar-control d-flex">
         @if(Auth::check())
-            <span class="my-navbar-item">{{ Auth::user()->name }}</span>
+            <span class="my-navbar-item " >{{ Auth::user()->name }}さん</span>
+
+            <a href="{{ route('to.mypage') }}"  class="my-navbar-item ml-auto">マイページ</a>
+            /
+            <a href="{{ route('header.tomypage') }}" class="my-navbar-item">カート</a>
             /
             <a href="#" id="logout" class="my-navbar-item">ログアウト</a>
             <form id="logout-form" action="{{ route('logout') }}" method="post" style="display: none;">
@@ -36,8 +40,6 @@
                 document.getElementById('logout-form').submit();
                 });
             </script>
-            <a href="{{ route('to.mypage') }}"  class="my-navbar-item justify-content-end">マイページ</a>
-            <a href="{{ route('header.tomypage') }}" class="my-navbar-item justify-content-end">カート</a>
 
         @else
             <a class="my-navbar-item" href="{{ route('login') }}">ログイン</a>

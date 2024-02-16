@@ -4,7 +4,7 @@
 
             <div class='text-center'>注文内容確認</div>
                 <div class="card-body">
-                    <table class='table'>
+                    <table class='table col-md-8'>
                         <thead>
                             <tr>
                                 <th>画像</th>
@@ -25,6 +25,7 @@
                         </tbody>
                     </table>
                   
+                    <div class='text-center'>お届け先情報</div>
                     <table class='table'>
                         <thead>
                             <tr>
@@ -46,16 +47,18 @@
                         </tbody>
                     </table>
 
-                    <a href="{{ route('transition.cart') }}">
-                        <button type='button' class='btn btn-primary'>注文内容変更</button>
-                    </a>
+                    <div class="d-flex justify-content-center">
+                        <a href="{{ route('transition.cart') }}" class="mr-2">
+                            <button type='button' class='btn btn-secondary'>注文内容変更</button>
+                        </a>
 
-                <form action="{{ route('order.completed',['id' => $cart->id]) }}" method='post'>
-                @csrf
-                    <input type='hidden' class='form-control' name='id' value="{{ $cart->id }}"/>
-                    <input type='hidden' name='buy_flg' value="{{ $cart['buy_flg'] }}"/>
-                    <input type="submit" value="購入確定する">
-                </form>
+                        <form action="{{ route('order.completed',['id' => $cart->id]) }}" method='post'>
+                        @csrf
+                            <input type='hidden' class='form-control' name='id' value="{{ $cart->id }}"/>
+                            <input type='hidden' name='buy_flg' value="{{ $cart['buy_flg'] }}"/>
+                            <input type="submit" class="btn btn-primary"  value="購入確定する">
+                        </form>
+                    </div>
 
                 </div>
             </div>

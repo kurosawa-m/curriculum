@@ -5,6 +5,19 @@
             <div class='text-center'>お届け先</div>
                 <div class="card-body">
 
+                <div class='panel-body'><!-- バリデーション -->
+                    @if($errors->any())
+                    <div class='alert alert-danger'>
+                        <ul>
+                            @foreach($errors->all() as $message)
+                            <li>{{ $message }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+                </div>
+
+
                     <form action="{{ route('reg.userinfo',['id' => $user['id']]) }}" method="post">
                     @csrf
                     @if(!isset($user['fullname']))

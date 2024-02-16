@@ -14,17 +14,12 @@
                         <label for='email' class='mt-2'>メールアドレス</label>
                             <input type='text' class='form-control' name='email' value="{{ $user['email'] }}"/>
 
-                        <label for='password' class='mt-2'>パスワード</label>
-                            <input type='text' class='form-control' name='password' value="{{ $user['password'] }}"/>
                     @else
                         <label for='name'>ユーザー名</label>
                             <input type='text' class='form-control' name='name' value="{{ $user['name'] }}"/>
                             
                         <label for='email' class='mt-2'>メールアドレス</label>
                             <input type='text' class='form-control' name='email' value="{{ $user['email'] }}"/>
-
-                        <label for='password' class='mt-2'>パスワード</label>
-                            <input type='text' class='form-control' name='password' value="{{ $user['password'] }}"/>
 
                         <label for='fullname'>氏名</label>
                             <input type='text' class='form-control' name='fullname' value="{{ $user['fullname'] }}"/>
