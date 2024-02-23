@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
       <div class="col col-md-offset-3 col-md-6">
         <nav class="card mt-5">
-          <div class="card-header">ログイン</div>
+          <div class="card-header" style="background-color:#fffacd;">ログイン</div>
           <div class="card-body">
             @if($errors->any())
               <div class="alert alert-danger">
@@ -25,7 +25,7 @@
                 <input type="password" class="form-control" id="password" name="password" />
               </div>
               <div class="text-right">
-                <button type="submit" class="btn btn-primary">送信</button>
+                <button type="submit" class="btn" style="background-color:#ffd700;">ログイン</button>
               </div>
             </form>
           </div>

@@ -5,39 +5,54 @@
             <div class='text-center'>マイページ</div>
             <div class='text-center'>{{ $user['name'] }}さん</div>
 
-            <div class="card-body">
-                <table class='table'>
-                    <thead>
-                        <tr>
-                            <th>ユーザー情報</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                        @if(!isset($user['fullname']))
-                            <th>{{ $user['email'] }}</th>
-                        @else
-                            <th>{{ $user['fullname'] }}</th>
-                            <th>{{ $user['email'] }}</th>
-                            <th>{{ $user['tel'] }}</th>
-                            <th>{{ $user['postcode'] }}</th>
-                            <th>{{ $user['address'] }}</th>
-                        @endif
-                        </tr>
-                    </tbody>
-                </table>
+            <div class='text-right mr-3'>
+                <a href="{{ route('user.info') }}">
+                    <button type='button' class='btn' style="background-color:#ffd700;">ユーザー情報変更</button>
+                </a>
             </div>
-            <a href="{{ route('user.info') }}">
-                <button type='button' class='btn btn-primary'>ユーザー情報変更</button>
-            </a>
 
+            <div class='d-flex align-items-center justify-content-center'>
+                <div class="card mt-3 w-75 ">
+                    <div class="card-header" style="background-color:#fffacd;">
+                        <div class='text-center'>ユーザー情報</div>
+                    </div>
+                    <div class="card-body">
+                        <table class='table'>
+                            <thead>
+                                    <th>氏名</th>
+                                    <th>メールアドレス</th>
+                                    <th>電話番号</th>
+                                    <th>郵便番号</th>
+                                    <th>住所</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                @if(!isset($user['fullname']))
+                                    <th></th>
+                                    <th>{{ $user['email'] }}</th>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                @else
+                                    <th>{{ $user['fullname'] }}</th>
+                                    <th>{{ $user['email'] }}</th>
+                                    <th>{{ $user['tel'] }}</th>
+                                    <th>{{ $user['postcode'] }}</th>
+                                    <th>{{ $user['address'] }}</th>
+                                @endif
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
             <div class="card-body">
-                <div class="card-header">
+                <div class="card-header" style="background-color:#fffacd;">
                     <div class='text-center'>注文履歴</div>
                 </div>
                 <div class="card-body">
-                    <table class='table'>
+                    <table class='table table-striped'>
                         <thead>
                             <tr>
                                 <th>商品画像</th>
@@ -45,6 +60,7 @@
                                 <th>金額</th>
                                 <th>数量</th>
                                 <th>購入日時</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -59,7 +75,7 @@
                                     <form action="{{ route('reg.review',['id' => $cart->goods_id]) }}" method="post">
                                         @csrf
                                         <input type="hidden" class="form-control" name="id" value="{{ $cart['goods'][0]['id'] }}"/>
-                                        <button type="submit" class="btn btn-primary mt-3">レビューを投稿する</button>
+                                        <button type="submit" class="btn mt-3" style="background-color:#ffd700;">レビューを投稿する</button>
                                     </form>
                                 </td>
                             </tr>

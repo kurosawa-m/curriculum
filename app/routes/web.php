@@ -28,10 +28,6 @@ Route::group(['middleware' => ['auth', 'can:admin_only']], function () {
 Auth::routes();
 Route::group(['middleware' => 'auth'],function(){
 
-// Route::get('/', [DisplayController::class,'index']);//トップページ
-// Route::get('/search',[DisplayController::class, 'keywordSearch'])->name('keyword.search');
-// Route::get('/goods/{id}/detail',[DisplayController::class,'goodsDetail'])->name('goods.detail');//トップページから商品詳細画面へ
-
 Route::get('/shop_toppage', [DisplayController::class, 'shopTop'])->name('shop.toppage');//トップページから事業者トップページへ遷移
 Route::get('/user_list', [DisplayController::class, 'userList'])->name('user.list');//事業者トップページからユーザーリストへ遷移
 Route::get('/sales_mgmt', [DisplayController::class, 'salesMgmt'])->name('sales.mgmt');//事業者トップページから売上管理画面へ遷移

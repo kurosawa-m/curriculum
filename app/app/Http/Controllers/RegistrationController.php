@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateData;
+use App\Http\Requests\UpdataGoods;
+
 
 use App\Goods;
 use App\Buy;
@@ -34,16 +36,26 @@ class RegistrationController extends Controller
 
     }
 
-    public function updateGoods(int $id, Request $request) {//事業者_商品編集DBへ登録
+    public function updateGoods(int $id, UpdataGoods $request) {//事業者_商品編集DBへ登録
 
         $goods = new Goods;
         $record = $goods->find($id);
+
+        // 拡張子つきでファイル名を取得
+        $imageName = $request->file('image')->getClientOriginalName();//<input type='file' name='image'/>
+        // 拡張子のみ
+        $extension = $request->file('image')->getClientOriginalExtension();
+        // 新しいファイル名を生成（形式：元のファイル名_ランダムの英数字.拡張子）→同じ名前の違う画像があるかも
+        $newImageName = pathinfo($imageName, PATHINFO_FILENAME) . "_" . uniqid() . "." . $extension;
+        $request->file('image')->move(public_path() . "/img", $newImageName);
+        $image = "/img" . $newImageName;//public/imgの中に/tmp作らなきゃダメだった
 
         $columns = ['name','content','amount'];
 
         foreach($columns as $column){
             $record->$column = $request->$column;
         }
+        $record->image = $newImageName;//画像だけはforeach外す
 
         $record->save();
 
@@ -164,20 +176,6 @@ class RegistrationController extends Controller
     
     public function confirmAddress() {//住所登録画面へ
 
-        // $buys = new Buy;
-        // $buy_id = Buy::where('user_id',$request->input('data')[0]['id'])->get();
-
-        // foreach($buy_id as $buy){
-        //     foreach($request->input('data') as $val){
-        //         if($buy['goods_id']==$val['goods_id']){
-        //         $buy->quantity = $val['quantity'];
-        //         $buy->goods_id = $val['goods_id'];
-        //         $buy->user_id = $val['id'];
-        //     $buy->save();
-        //         }
-        //     }
-        // }
-
         $all = Auth::user();
 
         return view('confirm_address',[
@@ -197,7 +195,7 @@ class RegistrationController extends Controller
                 $buy->quantity = $val['quantity'];
                 $buy->goods_id = $val['goods_id'];
                 $buy->user_id = $val['id'];
-            $buy->save();
+                $buy->save();
                 }
             }
         }

@@ -1,53 +1,37 @@
 @extends('layouts.layout')
 @section('content')
         <main class="py-4">
-            <div class="row justify-content-around">
-                <div class="col-md-8">
                 @can ('admin_only')
                     <span>
 
-                        <div class="card">
-                            <div class="card-header">
-                                <div class='text-center'>登録確認</div>
-                            </div>
-                            <div class="card-body">
-                                <div class="card-body">
-                                    <table class='table text-nowrap'>
-                                        <thead>
-                                            <tr>
-                                                <th scope='col'>商品画像</th>
-                                                <th scope='col'>商品名</th>
-                                                <th scope='col'>商品説明文</th>
-                                                <th scope='col'>金額</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th scope='col'><img src='{{ $image }}'  width="200" height="200"></th>
-                                                <th scope='col'>{{ $goods['name'] }}</th>
-                                                <th scope='col'>{{ $goods['content'] }}</th>
-                                                <th scope='col'>{{ $goods['amount'] }}</th>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-around">
-                            <form action="{{ route('registration.goods') }}" method='post'>
-                                @csrf
-                                <input type='hidden' name='image' value='{{ $newImageName }}'/>
+                        
+                        <div class="container px-4 px-lg-5 my-5">
+                <div class="row gx-4 gx-lg-5 align-items-center">
+                    <div class="col-md-6"><img src='{{ $image }}'  width="200" height="200"></div>
+                    <div class="col-md-6">
+                    <h1 class="display-5 fw-bolder">{{ $goods['name'] }}</h1>
+                        <div class="fs-5 mb-5"><span>{{ $goods['amount'] }}円</span></div>
+                        <p class="lead">{{ $goods['content'] }}</p>
+                        <div class="d-flex">
+                        <form action="{{ route('registration.goods') }}" method="post" class="form" >
+                            @csrf
+                            <input type='hidden' name='image' value='{{ $newImageName }}'/>
                                 <input type='hidden' name='name' value='{{ $goods["name"] }}'/>
                                 <input type='hidden' name='content' value='{{ $goods["content"] }}'/>
                                 <input type='hidden' name='amount' value='{{ $goods["amount"] }}'/>
-                                <button class='btn btn-primary mt-3'>登録</button>
-                            </form>
+                            <button class="btn mt-3" style="background-color:#ffd700;" type="submit">
+                                <i class="bi-cart-fill me-1"></i>
+                                商品登録
+                            </button>
+                        </form>
                         </div>
-                        
-                    </span>
-                    @endcan
+                    </div>
                 </div>
             </div>
+
+
+                    </span>
+                    @endcan
         </main>
     </div>
 @endsection

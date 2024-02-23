@@ -2,7 +2,7 @@
 @section('content')
         <main class="py-4">
 
-            <div class='text-center'>お届け先</div>
+            <div class='text-center display-4'>お届け先</div>
                 <div class="card-body">
 
                 <div class='panel-body'><!-- バリデーション -->
@@ -54,7 +54,7 @@
 
                         <input type='hidden' class='form-control' name='id' value="{{ $user['id'] }}"/>
                         <div class='row justify-content-center'>
-                           <button type='submit' class='btn btn-primary w-25 mt-3'>注文内容確認へ</button>
+                           <button type='submit' class='btn w-25 mt-3' style="background-color:#ffd700;">注文内容確認へ</button>
 
                     </form>
 

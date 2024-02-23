@@ -22,41 +22,71 @@
 </head>
 <body>
 
-<div class="my-navbar-control d-flex">
-        @if(Auth::check())
-            <span class="my-navbar-item " >{{ Auth::user()->name }}さん</span>
-
-            <a href="{{ route('to.mypage') }}"  class="my-navbar-item ml-auto">マイページ</a>
-            /
-            <a href="{{ route('header.tomypage') }}" class="my-navbar-item">カート</a>
-            /
-            <a href="#" id="logout" class="my-navbar-item">ログアウト</a>
-            <form id="logout-form" action="{{ route('logout') }}" method="post" style="display: none;">
-                @csrf
-            </form>
-            <script>
-                document.getElementById('logout').addEventListener('click',function(event){
-                event.preventDefault();
-                document.getElementById('logout-form').submit();
-                });
-            </script>
-
-        @else
-            <a class="my-navbar-item" href="{{ route('login') }}">ログイン</a>
-            /
-            <a class="my-navbar-item" href="{{ route('register') }}">会員登録</a>
-        @endif
-    </div>
 
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    トップページ
-                </a>
+        <nav class="navbar navbar-expand-lg navbar-light shadow-sm" style="background-color:#fffacd;">
+            <div class="container  px-4 px-lg-5">
+
+                <a class="navbar-brand" href="{{ url('/') }}">トップページ へ</a>
+                
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                @if(Auth::check())
+                    <li class="nav-item">{{ Auth::user()->name }}さん</li>
+                    <li class="nav-item"><a href="{{ route('to.mypage') }}"  class="my-navbar-item ml-5">マイページ</a></li>
+                    <li class="nav-item"><a href="#" id="logout" class="my-navbar-item ml-5">ログアウト</a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="post" style="display: none;">
+                        @csrf
+                    </form>
+                    <script>
+                        document.getElementById('logout').addEventListener('click',function(event){
+                        event.preventDefault();
+                        document.getElementById('logout-form').submit();
+                        });
+                    </script></li>
+                @else
+                    <li class="nav-item"><a class="my-navbar-item ml-5" href="{{ route('login') }}">ログイン</a></li>
+                    
+                    <li class="nav-item"><a class="my-navbar-item ml-5" href="{{ route('register') }}">会員登録</a></li>
+                @endif
+                </ul>
+                <div class="d-flex">
+                    <a href="{{ route('header.tomypage') }}" class="btn btn-outline-dark"><i class="bi-cart-fill me-1">カート</i></a>
+                </div>
             </div>
         </nav>
         @yield('content')
     </div>
+    
+    
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4"> -->
+                        <!-- <li class="nav-item"><a class="nav-link active" aria-current="page" href="#!">Home</a></li> -->
+                        <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Shop</a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#!">All Products</a></li>
+                                <li><hr class="dropdown-divider" /></li>
+                                <li><a class="dropdown-item" href="#!">Popular Items</a></li>
+                                <li><a class="dropdown-item" href="#!">New Arrivals</a></li>
+                            </ul>
+                        </li>
+                    <!-- </ul> -->
+                    <form class="d-flex">
+                        <button class="btn btn-outline-dark" type="submit">
+                            <i class="bi-cart-fill me-1"></i>
+                            Cart
+                            <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+
+
+
 </body>
 </html>
+

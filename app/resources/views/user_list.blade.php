@@ -23,6 +23,10 @@
                 </table>
             </div>
             
+            <div class='text-center'>
+            <a href="{{ route('shop.toppage') }}">事業者トップページ へ戻る</a>
+            </div>
+
         </main>
     </div>
 @endsection

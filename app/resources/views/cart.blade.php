@@ -25,10 +25,10 @@
                                     <th><input type='hidden' name='data[{{ $key }}][goods_id]' value="{{ $cart->Goods[0]->id }}"/></th>
                                     <th><input type='hidden' name='data[{{ $key }}][id]' value="{{ Auth::id() }}"/></th>
                                     <th>
-                                        <button type='submit' class='btn mx-auto'>個数変更</button>
+                                        <button type='submit' class='btn' style="background-color:#c0c0c0;">個数変更</button>
                                     </th>
                                     <th>
-                                        <a href="{{ route('delete.cart', ['id' => $cart['id']]) }}" class='btn btn-danger'>削除</a>
+                                        <a href="{{ route('delete.cart', ['id' => $cart['id']]) }}" class='btn'>削除</a>
                                     </th>
                                 </tr>
                             @endforeach
@@ -37,7 +37,7 @@
                     </form>
                 </div>
                 <div class="d-flex justify-content-around">
-                    <a href="{{ route('confirm.address') }}" class='btn btn-primary'>購入へ進む</a>
+                    <a href="{{ route('confirm.address') }}" class='btn' style="background-color:#ffd700;">購入へ進む</a>
                 </div>
             </div>
 

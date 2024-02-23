@@ -7,12 +7,25 @@
     <div class="row justify-content-around">
         <div class="col-md-6">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header" style="background-color:#fffacd;">
                     <div class='text-center'>商品編集</div>
                 </div>
+
+                <div class='panel-body'><!-- バリデーション -->
+                    @if($errors->any())
+                    <div class='alert alert-danger'>
+                        <ul>
+                            @foreach($errors->all() as $message)
+                            <li>{{ $message }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+                </div>
+
                 <div class="card-body d-flex justify-content-center align-items-center flex-column">
                     <div class="row flex-column">
-                        <form action="{{ route('goods.update',['id' => $goods['id']]) }}" method="post">
+                        <form action="{{ route('goods.update',['id' => $goods['id']]) }}" method="post" enctype="multipart/form-data">
                         @csrf
                             <div class="text-center">
                                 <label for='image'>画像</label>
@@ -31,7 +44,7 @@
                                 <input type='text' class='form-control' name='amount' value="{{ $goods['amount'] }}"/>
                             </div>
                             <div class='row justify-content-center'>
-                                <button type='submit' class='btn btn-primary w-25 mt-3'>変更</button>
+                                <button type='submit' class='btn w-25 mt-3' style="background-color:#ffd700;">変更</button>
                             </div>
                         </form>
                     </div>

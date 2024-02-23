@@ -1,20 +1,24 @@
 @extends('layouts.layout')
 @section('content')
     <main class="py-4">
-        <div class="col-md-5 mx-auto">
+        <div class="col-md-7 mx-auto">
             <div class="card">
-                <div class="card-header">
-                    <h4 class='text-center'>商品登録</h1>
+                <div class="card-header" style="background-color:#fffacd;">
+                    <h4 class='text-center'>レビュー登録</h1>
                 </div>
                 <div class="card-body">
                     <div class="card-body">
                         <form action="{{ route('confirm.review',['id' => $goods['id']]) }}" method="post">
                             @csrf
-                            <label for='image'><img src="{{ asset('img/' . $goods['image']) }}"  width="200" height="200"></label>
-
-                            <label for='name' class='mt-2'>{{ $goods['name'] }}</label>
-
-                            <label for='amount' class='mt-2'>{{ $goods['amount'] }}円</label>
+                            <div class="container px-4 px-lg-5 my-5">
+                                <div class="row gx-4 gx-lg-5 align-items-center">
+                                    <div class="col-md-8"><img src="{{ asset('img/' . $goods['image']) }}"  width="200" height="200"></div>
+                                    <div class="col-md-4">
+                                        <h1 class="display-5 fw-bolder">{{ $goods['name'] }}</h1>
+                                        <div class="fs-5 mb-5"><span>{{ $goods['amount'] }}円</span></div>
+                                    </div>
+                                </div>
+                            </div>
 
                             <label for='title' class='mt-2'>レビュータイトル</label>
                                 <input type='text' class='form-control' name='title'/>
@@ -25,7 +29,7 @@
                             <input type='hidden' class='form-control' name='id' value="{{ $goods['id'] }}"/>
 
                             <div class='row justify-content-center'>
-                                <button type='submit' class='btn btn-primary w-25 mt-3'>確認画面へ</button>
+                                <button type='submit' class='btn w-25 mt-3' style="background-color:#ffd700;">確認画面へ</button>
                             </div> 
                         </form>
                     </div>

@@ -5,14 +5,10 @@
             <div class="row justify-content-around">
                 <div class="col-md-6">
 
-                <th scope='col'>
-                    <a href="{{ route('shop.toppage') }}">事業者トップページへ</a>
-                </th>
-
                     <div class="row justify-content-around">
                         <div class="col-md-10">
                             <div class="card">
-                                <div class="card-header">
+                                <div class="card-header" style="background-color:#fffacd;">
                                     <div class='text-center'>検索</div>
                                 </div>
                                 <div class="card-body d-flex justify-content-center align-items-center">
@@ -22,13 +18,13 @@
                                             <div class="col-auto">
                                                 <input type="text" name="keyword" placeholder="キーワードを入力" class="form-control" value="{{ $keyword }}">
                                             </div>
-                                            <div class="col-auto">
+                                            <div class="col-auto mt-2">
                                                 <input type="text" name="from" placeholder="最低価格" value="{{ $from }}">
                                                     <span class="mx-3">~</span>
                                                 <input type="text" name="until" placeholder="上限価格" value="{{ $until }}">
                                             </div>
-                                            <div class="col-auto">
-                                                <button type="submit" class="btn btn-primary">検索</button>
+                                            <div class="col-auto mt-3">
+                                                <button type="submit" class="btn" style="background-color:#ffd700;">検索</button>
                                             </div>
                                         </div>
                                     </form>
@@ -38,7 +34,7 @@
                     </div>
 
                     <div class="card mt-5">
-                        <div class="card-header">
+                        <div class="card-header" style="background-color:#fffacd;">
                             <div class='text-center'>商品一覧</div>
                         </div>
                         <div class="card-body">

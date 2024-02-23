@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\UpdataGoods;
 
 use App\Goods;
 use App\Buy;
@@ -49,22 +50,24 @@ class DisplayController extends Controller
 
         // キーワード検索
         $keyword = $request->input('keyword');
-        $goods = new Goods;
-        $all = $goods->where('del_flg','=',0)->get();
-        if (isset($keyword)) {
-            $all = $goods->where('name', 'like', '%' . $keyword . '%')->orWhere('content', 'like', '%' . $keyword . '%')->get();
+        $goods = Goods::where('del_flg', 0);
+        if ($keyword) {
+            $goods->where(function($query) use ($keyword) {
+                $query->where('name', 'like', '%' . $keyword . '%')
+                    ->orWhere('content', 'like', '%' . $keyword . '%');
+            });
         }
-
         // 金額検索
         $from = $request->input('from');
         $until = $request->input('until');
-        if (isset($from) && isset($until)){
-            $all = $goods->whereBetween("amount", [$from, $until])->get();//text部分をamount?
+        if ($from && $until) {
+            $goods->whereBetween('amount', [$from, $until]);
+        } elseif ($from) {
+            $goods->where('amount', '>=', $from);
+        } elseif ($until) {
+            $goods->where('amount', '<=', $until);
         }
-
-        // 検索かけなかったら
-        // $goods = new Goods;
-        // $all = $goods->all()->toArray();
+        $all = $goods->get();   
 
         return view('home',[
             'goodsall'=> $all,
@@ -104,7 +107,9 @@ class DisplayController extends Controller
     public function userList(Request $request){//事業者トップページからユーザーリストへ遷移
 
         $user = new User;
-        $all = $user->all()->toArray();
+        $all = $user->where('role','=',0)->get();
+        // $all = $user->all()->toArray();
+
         // dd($all);
         return view('user_list',[
             'users'=> $all,
@@ -116,7 +121,7 @@ class DisplayController extends Controller
         return view('reg_form');
     }
 
-    public function sendRegData(Request $request){//商品登録画面から値保持して確認画面へ
+    public function sendRegData(UpdataGoods $request){//商品登録画面から値保持して確認画面へ
 
         $goods = [
             'name'=>$request->input('name'),
@@ -166,10 +171,11 @@ class DisplayController extends Controller
     
     public function toMypage(Request $request){//マイページへ遷移
     
-        $all = Auth::user()->first();
+        $all = Auth::user();
+        // dd($all);
+
         $buys = new Buy;
         $goods = new Goods;
-
         $cart = Auth::user()->buy()->where('buy_flg','=',1)->with('Goods')->get();//リレーションしたgoodsテーブルの情報も一緒にselect
 
         return view('mypage',[

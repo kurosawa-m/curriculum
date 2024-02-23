@@ -3,7 +3,7 @@
     <main class="py-4">
         <div class="col-md-8 mx-auto">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header" style="background-color:#fffacd;">
                     <h4 class='text-center'>レビュー内容確認</h1>
                 </div>
                 <div class="card-body">
@@ -31,7 +31,7 @@
                             <input type='hidden' name='comment' value="{{ $review['comment'] }}"/>
                             <input type='hidden' name='id' value="{{ $review['goods_id'] }}"/>
                             <div class='row justify-content-center'>
-                                <button type='submit' class='btn btn-primary w-25 mt-3'>レビューを投稿する</button>
+                                <button type='submit' class='btn w-25 mt-3' style="background-color:#ffd700;">レビューを投稿する</button>
                             </div> 
                         </form>
                         

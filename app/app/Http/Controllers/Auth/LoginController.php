@@ -45,12 +45,12 @@ class LoginController extends Controller
 
     public function redirectPath(){
 
-        $user = Auth::user()->first();
+        $user = Auth::user();
 
-        if($user['id']===0){
-            return view('/home');
+        if($user->role == 0){
+            return '/';
         }else{
-            return view('/shop_toppage');
+            return '/shop_toppage';
         }
 
     }

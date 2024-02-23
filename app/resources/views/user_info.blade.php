@@ -8,35 +8,35 @@
                     <form action="{{ route('update.userinfo',['id' => $user['id']]) }}" method="post">
                     @csrf
                     @if(!isset($user['fullname']))
-                        <label for='name'>ユーザー名</label>
-                            <input type='text' class='form-control' name='name' value="{{ $user['name'] }}"/>
+                        <label for='name' >ユーザー名</label>
+                            <input type='text' class='form-control mb-4' name='name' value="{{ $user['name'] }}"/>
                             
                         <label for='email' class='mt-2'>メールアドレス</label>
-                            <input type='text' class='form-control' name='email' value="{{ $user['email'] }}"/>
+                            <input type='text' class='form-control mb-4' name='email' value="{{ $user['email'] }}"/>
 
                     @else
                         <label for='name'>ユーザー名</label>
-                            <input type='text' class='form-control' name='name' value="{{ $user['name'] }}"/>
+                            <input type='text' class='form-control mb-4' name='name' value="{{ $user['name'] }}"/>
                             
                         <label for='email' class='mt-2'>メールアドレス</label>
-                            <input type='text' class='form-control' name='email' value="{{ $user['email'] }}"/>
+                            <input type='text' class='form-control mb-4' name='email' value="{{ $user['email'] }}"/>
 
                         <label for='fullname'>氏名</label>
-                            <input type='text' class='form-control' name='fullname' value="{{ $user['fullname'] }}"/>
+                            <input type='text' class='form-control mb-4' name='fullname' value="{{ $user['fullname'] }}"/>
 
                         <label for='tel'>電話番号</label>
-                            <input type='text' class='form-control' name='tel' value="{{ $user['tel'] }}"/>
+                            <input type='text' class='form-control mb-4' name='tel' value="{{ $user['tel'] }}"/>
                             
                         <label for='postcode'>郵便番号</label>
-                            <input type='text' class='form-control' name='postcode' value="{{ $user['postcode'] }}"/>
+                            <input type='text' class='form-control mb-4' name='postcode' value="{{ $user['postcode'] }}"/>
 
                         <label for='address'>住所</label>
-                            <input type='text' class='form-control' name='address' value="{{ $user['address'] }}"/>
+                            <input type='text' class='form-control mb-4' name='address' value="{{ $user['address'] }}"/>
                     @endif
 
                         <input type='hidden' class='form-control' name='id' value="{{ $user['id'] }}"/>
                         <div class='row justify-content-center'>
-                           <button type='submit' class='btn btn-primary w-25 mt-3'>登録</button>
+                           <button type='submit' class='btn w-25 mt-3' style="background-color:#ffd700;">登録</button>
 
                     </form>
 
