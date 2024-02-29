@@ -147,6 +147,8 @@ return [
     */
 
     'attributes' => [
+        'name' => 'ユーザー名',
+        'email' => 'メールアドレス',
         'fullname' => '氏名',
         'tel' => '電話番号',
         'postcode' => '郵便番号',

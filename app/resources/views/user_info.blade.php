@@ -5,6 +5,19 @@
             <div class='text-center'>ユーザー情報変更</div>
                 <div class="card-body">
 
+                <div class='panel-body'><!-- バリデーション -->
+                    @if($errors->any())
+                    <div class='alert alert-danger'>
+                        <ul>
+                            @foreach($errors->all() as $message)
+                            <li>{{ $message }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+                </div>
+
+
                     <form action="{{ route('update.userinfo',['id' => $user['id']]) }}" method="post">
                     @csrf
                     @if(!isset($user['fullname']))
@@ -36,7 +49,7 @@
 
                         <input type='hidden' class='form-control' name='id' value="{{ $user['id'] }}"/>
                         <div class='row justify-content-center'>
-                           <button type='submit' class='btn w-25 mt-3' style="background-color:#ffd700;">登録</button>
+                           <button type='submit' class='btn w-25 mt-3' style="background-color:#ffd700;">ユーザー情報更新</button>
 
                     </form>
 

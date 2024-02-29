@@ -12,7 +12,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- ここに収入を表示する -->
                         @foreach($users as $user)
                         <tr>
                             <th>{{ $user['name'] }}</th>

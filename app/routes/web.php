@@ -59,6 +59,6 @@ Route::post('/review/{id}/reg',[DisplayController::class,'registrationReview'])-
 Route::post('/confirm_review/{id}', [DisplayController::class, 'confirmReview'])->name('confirm.review');//レビュー内容確認画面へ
 Route::post('/goods_detail/{id}', [RegistrationController::class, 'completedRegReview'])->name('completed.reg.review');//レビュー内容登録、商品詳細ページへ遷移
 Route::delete('/delete_user/{id}',[RegistrationController::class, 'deleteUser'])->name('delete.user');//ユーザー削除（退会）
+});
 
 Route::post('/ajax','DisplayController@ajaxscroll');//無限スクロール
-});

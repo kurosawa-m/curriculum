@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateData;
 use App\Http\Requests\UpdataGoods;
+use App\Http\Requests\UpdataUserinfo;
 
 
 use App\Goods;
@@ -82,7 +83,7 @@ class RegistrationController extends Controller
     }
 
     
-    public function updateUserinfo(int $id, Request $request) {//変更後ユーザー情報登録
+    public function updateUserinfo(int $id, UpdataUserinfo $request) {//変更後ユーザー情報登録
 
         $users = new User;
         $record = $users->find($id);

@@ -2,7 +2,7 @@
 @section('content')
         <main class="py-5">
             <div class="container px-4 px-lg-5 my-5">
-                <div class="row gx-4 gx-lg-5 align-items-center">
+                <div class="row gx-4 gx-lg-5 row justify-content-around">
                     <div class="col-md-6"><img src="{{ asset('img/' . $goodsId['image']) }}"  width="200" height="200"></div>
                     <div class="col-md-6">
                     <h1 class="display-5 fw-bolder">{{ $goodsId['name'] }}</h1>
@@ -24,22 +24,28 @@
             </div>
 
             <!-- レビュー -->
-            <div class="card">
-                <div class="card-header" style="background-color:#fffacd;">
-                    <div class='text-center'>レビュー</div>
+            <div class="border-top align-items-center justify-content-center">
+                <div class='text-center mt-3'>レビュー</div>
+
+                    <div class="container mt-3">
+                        <div class="row justify-content-center">
+                            <div class="card col-md-6 row">
+                                @if($reviewId->isEmpty())
+                                    <div class='card-body text-center mt-3'>レビューはまだありません</div>
+                                @else
+                                    @foreach($reviewId as $review)
+                                    <div class="card-header" style="background-color:#fffacd; font-weight: bold;">
+                                        {{ $review['title'] }}
+                                    </div>
+                                    <div class="card-body">
+                                        {{ $review['comment'] }}
+                                    </div>
+                                    @endforeach
+                                @endif
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <table class='table mt-4'>
-                @if($reviewId->isEmpty())
-                    <div class='text-center mt-3'>レビューはまだありません</div>
-                @else
-                    @foreach($reviewId as $review)
-                        <tr>
-                            <th scope='col'>{{ $review['title'] }}</th>
-                            <th scope='col'>{{ $review['comment'] }}</th>
-                        </tr>
-                    @endforeach
-                @endif
-                </table>
             </div>
 
         </main>

@@ -28,7 +28,12 @@
             <div class="container  px-4 px-lg-5">
 
                 <a class="navbar-brand" href="{{ url('/') }}">トップページ へ</a>
-                
+                @if(Auth::user() && Auth::user()['role'] == 1)
+                <a class="navbar-brand" href="{{ route('shop.toppage') }}">事業者ページ へ</a>
+                @else
+<div></div>
+                @endif
+
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                 @if(Auth::check())
                     <li class="nav-item">{{ Auth::user()->name }}さん</li>
